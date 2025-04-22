@@ -1,33 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
+import React from 'react'
+import { Canvas } from '@react-three/fiber'
+import { OrbitControls, OrthographicCamera } from '@react-three/drei'
+import { Model } from './components/model'
+import Grid from './components/gridPlanes'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const mouse = React.useRef({ x: 0, y: 0 })
+  const handleMouseMove = (e) => {
+    mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1
+    mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1
+
+  }
+ 
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="App" >
+     <div className="login-page"></div>
+    <Canvas style={{ height: '100vh', width: '100%' }} onMouseMove={handleMouseMove}>
+      <ambientLight intensity={2} />
+    <OrbitControls />
+    <OrthographicCamera makeDefault position={[10, 7, 10]} zoom={200} />
+    <Model mouse = {mouse.current}/>
+    <Grid row={10} col={10} planeWidth={2} planeDepth={2} spacing={0}/>
+    </Canvas>
+    </div>
+    
     </>
   )
 }
