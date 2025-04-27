@@ -3,11 +3,13 @@ import React from "react";
 
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
+import { useSelector, useDispatch } from 'react-redux';
 
 const Plane = ({ position, planeWidth, planeDepth }) => {
     const meshRef = React.useRef(null);
     const [hovered, setHovered] = React.useState(false);
     const opacityRef = React.useRef(0);
+    const myBoolean = useSelector((state) => state.globalState.myBoolean);
   
     useFrame(() => {
       if (meshRef.current) {
@@ -31,8 +33,8 @@ const Plane = ({ position, planeWidth, planeDepth }) => {
         <planeGeometry args={[planeDepth, planeWidth]} />
         <meshStandardMaterial
           attach="material"
-          color="#CFFF04"
-          emissive="white"
+          color={`${!myBoolean ? 'black' : 'white'}`}
+          emissive={`${!myBoolean ? 'black' : 'white'}`}
           transparent
           opacity={1}
           side={THREE.DoubleSide}

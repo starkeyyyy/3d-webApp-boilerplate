@@ -6,6 +6,7 @@ import { OrbitControls, OrthographicCamera } from '@react-three/drei'
 import { Model } from './components/model'
 import Grid from './components/gridPlanes'
 import Navbar from './components/navbar'
+import LoginForm from './components/login'
 
 function App() {
   const mouse = React.useRef({ x: 0, y: 0 })
@@ -19,12 +20,11 @@ function App() {
   return (
     <>
     <div className="App" >
-      <div className="nav"><Navbar/></div>
-     <div className="login-page"></div>
+     <div className="login-page" onMouseMove={handleMouseMove}><LoginForm/></div>
     <Canvas style={{ height: '100vh', width: '100%' }} onMouseMove={handleMouseMove}>
       <ambientLight intensity={2} />
-    <OrbitControls />
-    <OrthographicCamera makeDefault position={[10, 7, 10]} zoom={230} />
+    <OrbitControls enablePan={false} enableRotate={false} enableZoom= {false}/>
+    <OrthographicCamera makeDefault position={[10, 7, 10]} zoom={200} />
     <Model mouse = {mouse.current}/>
     <Grid row={10} col={10} planeWidth={2} planeDepth={2} spacing={0}/>
     </Canvas>

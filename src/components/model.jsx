@@ -6,11 +6,12 @@ Command: npx gltfjsx@6.5.3 public/models/wallE.glb -k
 import React from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 import * as THREE from "three";
-
 import { Canvas, useFrame } from "@react-three/fiber";
+import { useSelector, useDispatch } from 'react-redux';
 
 export function Model({ mouse, ...props }) {
   const modelRef = React.useRef();
+  const robotRef = React.useRef();
   const [newPosition, setNewPosition] = React.useState([0, 0, 0]);
   const { nodes, materials } = useGLTF("./models/wallE.glb");
   const texture = useTexture("./textures/walle-image.jpg");
@@ -21,6 +22,7 @@ export function Model({ mouse, ...props }) {
   const handleModel = () => {
     //something to do in future
   }
+  const myBoolean = useSelector((state) => state.globalState.myBoolean);
 
   useFrame(() => {
     if (modelRef.current) {
@@ -49,9 +51,32 @@ export function Model({ mouse, ...props }) {
         0.1
       );
     }
+    if (robotRef.current) {
+
+      if(myBoolean) {
+        robotRef.current.rotation.y  = THREE.MathUtils.lerp(
+          robotRef.current.rotation.y,
+          1,
+          0.05
+        );
+        robotRef.current.position.x = THREE.MathUtils.lerp(robotRef.current.position.x, 0, 0.05);
+        robotRef.current.position.z = THREE.MathUtils.lerp(robotRef.current.position.z,5.2 , 0.05)
+
+      }
+      else{
+        robotRef.current.rotation.y  = THREE.MathUtils.lerp(
+          robotRef.current.rotation.y,
+          0,
+          0.04
+        );
+        robotRef.current.position.x = THREE.MathUtils.lerp(robotRef.current.position.x, -2.8, 0.04);
+        robotRef.current.position.z = THREE.MathUtils.lerp(robotRef.current.position.z,2.4 , 0.04)
+      }
+
+    }
   });
   return (
-    <group {...props} dispose={null} position={[-2.1, 0, 1.1]}>
+    <group {...props} dispose={null} position={[-2.8, 0, 2.4]} rotation={[0 , 0 , 0]} ref={robotRef}>
         <mesh name="body" geometry={nodes.body.geometry} material={textureMaterial} position={[3.269, 0, -3.231]} />
       <mesh name="Plane" geometry={nodes.Plane.geometry} material={textureMaterial} position={[0, -1.025, 0]} scale={17.987} />
       <group name="head" position={[3.278, 0.289, -3.392]} scale={0.055} ref={modelRef}>
