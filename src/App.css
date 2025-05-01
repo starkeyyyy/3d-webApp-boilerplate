@@ -112,8 +112,8 @@ button svg{
   width: 20px;
   position: absolute;
   top: 50%;
-  left: 350px;
-  transform: translateY(-50%);
+  transition: left 0.7s ease;
+  transform: translateY(-100%);
 
 }
 

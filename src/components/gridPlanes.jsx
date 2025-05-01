@@ -33,8 +33,8 @@ const Plane = ({ position, planeWidth, planeDepth }) => {
         <planeGeometry args={[planeDepth, planeWidth]} />
         <meshStandardMaterial
           attach="material"
-          color={`${!myBoolean ? 'black' : 'white'}`}
-          emissive={`${!myBoolean ? 'black' : 'white'}`}
+          color={`${!myBoolean ? 'black' : 'black'}`}
+          emissive={`${!myBoolean ? 'black' : 'black'}`}
           transparent
           opacity={1}
           side={THREE.DoubleSide}
